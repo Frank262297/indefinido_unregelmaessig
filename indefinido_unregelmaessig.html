@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>Quiz: Pretérito indefinido – unregelmäßige Verben</title>
+<style>
+body { font-family: Arial; background:#f4f4f4; text-align:center; }
+.container { max-width:850px; margin:auto; background:white; padding:25px; border-radius:12px; }
+button { display:block; margin:10px auto; padding:12px; width:80%; font-size:16px; cursor:pointer; }
+.correct { background:#4CAF50; color:white; }
+.wrong { background:#f44336; color:white; }
+</style>
+</head>
+<body>
+<div class="container">
+<h2>Pretérito indefinido – unregelmäßige Verben</h2>
+<p id="q"></p>
+<div id="a"></div>
+<p id="feedback"></p>
+<p id="score">Punkte: 0</p>
+<button onclick="next()">Weiter</button>
+</div>
+
+<script>
+let qs = [
+{q:"Yo ____ ayer al cine. (ir)", a:["fui","iba","ido","iré"], c:0},
+{q:"Él ____ la tarea. (hacer)", a:["hizo","hacía","hace","hará"], c:0},
+{q:"Nosotros ____ la verdad. (decir)", a:["dijimos","decimos","decíamos","diríamos"], c:0},
+{q:"Tú ____ mucho ayer. (tener)", a:["tuviste","tenías","tienes","tendrás"], c:0},
+{q:"Ellos ____ tarde. (venir)", a:["vinieron","vienen","venían","vendrán"], c:0},
+{q:"Yo ____ todo. (saber)", a:["supe","sé","sabía","sabré"], c:0},
+{q:"Ella ____ la puerta. (poner)", a:["puso","pone","ponía","pondrá"], c:0},
+{q:"Nosotros ____ al mar. (ir)", a:["fuimos","vamos","íbamos","iremos"], c:0},
+{q:"Yo ____ un regalo. (dar)", a:["di","doy","daba","daré"], c:0},
+{q:"Él ____ feliz. (estar)", a:["estuvo","está","estaba","estará"], c:0},
+{q:"Yo ____ la verdad. (decir)", a:["dije","digo","decía","diré"], c:0},
+{q:"Tú ____ mucho. (hacer)", a:["hiciste","haces","hacías","harás"], c:0},
+{q:"Ellos ____ el coche. (tener)", a:["tuvieron","tienen","tenían","tendrán"], c:0},
+{q:"Yo ____ a Juan. (ver)", a:["vi","veo","veía","veré"], c:0},
+{q:"Nosotros ____ tarde. (venir)", a:["vinimos","venimos","veníamos","vendremos"], c:0},
+{q:"Ella ____ lo que pasó. (saber)", a:["supo","sabe","sabía","sabrá"], c:0},
+{q:"Yo ____ un café. (poner)", a:["puse","pongo","ponía","pondré"], c:0},
+{q:"Tú ____ muy amable. (estar)", a:["estuviste","estás","estabas","estarás"], c:0},
+{q:"Ellos ____ la verdad. (decir)", a:["dijeron","dicen","decían","dirán"], c:0},
+{q:"Yo ____ en casa. (ir)", a:["fui","voy","iba","iré"], c:0},
+{q:"Nosotros ____ mucho. (hacer)", a:["hicimos","hacemos","hacíamos","haremos"], c:0},
+{q:"Ella ____ todo. (tener)", a:["tuvo","tiene","tenía","tendrá"], c:0},
+{q:"Yo ____ el libro. (leer)", a:["leí","leo","leía","leeré"], c:0},
+{q:"Ellos ____ al profesor. (ver)", a:["vieron","ven","veían","verán"], c:0},
+{q:"Tú ____ la respuesta. (saber)", a:["supiste","sabes","sabías","sabrás"], c:0}
+];
+
+let current = 0;
+let score = 0;
+
+function load(){
+let q = qs[current];
+document.getElementById("q").innerText = (current+1)+". "+q.q;
+let aDiv = document.getElementById("a");
+aDiv.innerHTML="";
+q.a.forEach((ans,i)=>{
+let b = document.createElement("button");
+b.innerText = ans;
+b.onclick = ()=>check(i);
+aDiv.appendChild(b);
+});
+}
+
+function check(i){
+let q = qs[current];
+let buttons = document.querySelectorAll("#a button");
+buttons.forEach((b,index)=>{
+b.disabled = true;
+if(index===q.c) b.classList.add("correct");
+if(index===i && i!==q.c) b.classList.add("wrong");
+});
+if(i===q.c){
+score++;
+document.getElementById("feedback").innerText="✅ Richtig!";
+}else{
+document.getElementById("feedback").innerText="❌ Falsch!";
+}
+document.getElementById("score").innerText="Punkte: "+score;
+}
+
+function next(){
+current++;
+document.getElementById("feedback").innerText="";
+if(current<qs.length){
+load();
+}else{
+document.getElementById("q").innerText="Fertig! Punkte: "+score+"/"+qs.length;
+document.getElementById("a").innerHTML="";
+}
+}
+
+load();
+</script>
+</body>
+</html>
